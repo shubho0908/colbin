@@ -1,6 +1,6 @@
-# Next.js Auth System
+# Colbin - Recruitment Platform Prototype
 
-A modern authentication system that handles user registration, login, and profile management. Built with Next.js 13 and secured with industry-standard practices.
+A modern recruitment platform prototype that enables secure user registration, authentication, and profile management. Built with Next.js 13 and following industry-standard security practices.
 
 ## What's Included
 

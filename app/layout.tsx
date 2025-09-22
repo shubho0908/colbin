@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Auth System",
-  description: "A modern authentication system that handles user registration, login, and profile management. Built with Next.js 13 and secured with industry-standard practices.",
+  title: "Colbin - Recruitment Platform",
+  description: "A modern recruitment platform prototype with secure user authentication, profile management, and scalable architecture. Built with Next.js 13 and industry-standard practices.",
 };
 
 export default function RootLayout({
