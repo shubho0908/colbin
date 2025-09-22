@@ -1,80 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Auth System
 
-## Getting Started
+A modern authentication system that handles user registration, login, and profile management. Built with Next.js 13 and secured with industry-standard practices.
 
-First, run the development server:
+## What's Included
 
+- Simple user registration and login
+- Secure session management
+- Protected routes and API endpoints
+- Clean, responsive UI with Tailwind and Shadcn
+- Type safety with TypeScript
+- PostgreSQL database with Prisma
+
+## Quick Start
+
+1. **Get the code and install dependencies**:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone https://github.com/shubho0908/colbin.git
+cd colbin
+pnpm install
+```
+
+2. **Set up your environment**:
+Create a `.env` file with your database and secret key:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
+JWT_SECRET="your-secure-secret-key"
+```
+
+3. **Initialize the database and start coding**:
+```bash
+pnpm prisma migrate dev
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see your app in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project follows a clean, modular structure:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-
----
-
-# API Documentation
-
-## API Structure and Design Decisions
-
-This project uses the Next.js App Router API routes under `/app/api/` for all backend endpoints. The main endpoints are:
-
-- `POST /api/register` — Register a new user
-- `POST /api/login` — Authenticate a user and set a secure cookie
-- `POST /api/logout` — Log out the user by clearing the auth cookie
-- `GET /api/profile` — Get the authenticated user's profile
-
-All endpoints are designed to be stateless and RESTful, using JSON for request and response bodies. The Prisma ORM is used for database access.
-
-## Authentication Flow and Security
-
-- Authentication is handled using JWT tokens, which are signed and stored in an HTTP-only, Secure, SameSite=Lax cookie named `token`.
-- On login, a valid token is set in the cookie. On logout, the cookie is cleared.
-- All protected endpoints (like `/api/profile`) check for the presence and validity of the `token` cookie. If the cookie is missing or invalid, a 401 Unauthorized response is returned.
-- No sensitive data (like passwords) is ever returned in API responses.
-
-## Error Handling
-
-- All endpoints return JSON responses with appropriate HTTP status codes.
-- Validation errors (e.g., invalid input data) return a 400 status with error details.
-- Authentication errors (e.g., missing or invalid token) return a 401 status.
-- Not found errors (e.g., user not found) return a 404 status.
-- All other server errors return a 500 status with a generic error message.
-
-Example error response:
-
-```json
-{
-	"error": "Invalid credentials"
-}
+```
+app/
+├── api/          # Authentication endpoints (login, register, etc.)
+├── components/   # UI components and pages
+├── lib/         # Core logic and utilities
+└── store/       # State management
 ```
 
-## Scalability Suggestions
 
-- **Database Scaling:** Move from SQLite (if used) to a managed PostgreSQL or MySQL instance for production.
-- **Token Blacklisting:** For advanced security, implement token blacklisting or short-lived tokens with refresh tokens.
-- **Rate Limiting:** Add rate limiting to prevent brute-force attacks on authentication endpoints.
-- **API Versioning:** Introduce versioned API routes (e.g., `/api/v1/`) for future changes.
-- **Service Separation:** Split authentication and user management into separate microservices if the user base grows.
-- **Monitoring:** Add logging and monitoring for API usage and error tracking.
+## How Authentication Works
 
----
+The system provides a secure way to handle user accounts and sessions:
+
+### Signing Up
+When a new user registers, we validate their information, ensure their email isn't already taken, and securely hash their password before saving. Everything is checked and sanitized to prevent any security issues.
+
+### Logging In
+Users can sign in with their email and password. We verify their credentials, create a secure session using JWTs, and protect it using HTTP-only cookies. This means your session stays secure, even if there's malicious JavaScript on the page.
+
+### Security Features
+- Secure password storage with bcrypt
+- Protected sessions using JWTs
+- Safe cookie handling
+- Input validation to prevent attacks
+- Environment variables for sensitive data
+
+## API Overview
+
+Our API endpoints are simple and RESTful:
+
+### Main Endpoints
+- `POST /api/register`: Sign up new users with email and password
+- `POST /api/login`: Sign in and create a secure session
+- `POST /api/logout`: End the current session
+- `GET /api/profile`: Get the current user's profile
+- `GET /api/status`: Check if user is logged in
+
+All endpoints return clear success messages or helpful error details when something goes wrong. We handle common cases like:
+- Invalid inputs (wrong email format, short passwords)
+- Already registered emails
+- Wrong login credentials
+- Expired sessions
+
+## Future Improvements
+
+Here's how we could enhance the system:
+
+### Performance & Scale
+- Add caching with Redis
+- Deploy with Edge Functions
+- Optimize database queries and indexes
+
+### Security
+- Add two-factor authentication
+- Implement email verification
+- Enhance password requirements
+- Add login attempt limits
+
+### Features
+- Social login (Google)
+- Role-based permissions
+- Better session management
+- Multiple device support
+
+### Developer Experience
+- Add comprehensive logging
+- Set up error tracking
+- Implement automated testing
+- Create CI/CD pipeline
