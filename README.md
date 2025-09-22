@@ -1,6 +1,6 @@
 # Colbin - Recruitment Platform Prototype
 
-A modern recruitment platform prototype that enables secure user registration, authentication, and profile management. Built with Next.js 13 and following industry-standard security practices.
+A modern recruitment platform prototype that enables secure user registration, authentication, and profile management. Built with Next.js 15 and following industry-standard security practices.
 
 ## What's Included
 
